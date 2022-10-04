@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import { getProductById } from '../database/products';
 import profile from '../public/avatar.png';
 import chicken from '../public/chicken.png';
 import search from '../public/magnifying-glass.png';
@@ -22,12 +24,13 @@ const headerLinkStyles = css`
 `;
 
 export default function Header() {
+  const [cartTotal, setCartTotal] = useState(0);
   return (
     <header>
       <nav css={headerNavStyles}>
         <span css={headerLinkStyles}>
           <Link href="/">Home</Link>
-          <Link href="/shop">Shop</Link>
+          <Link href="/products">Shop</Link>
           <Link href="/size-info">Size info</Link>
         </span>
 
@@ -45,14 +48,17 @@ export default function Header() {
               <Image alt="" src={search} width="25px" height="25px" />
             </a>
           </Link>
+
           <Link href="/">
             <a>
               <Image alt="" src={profile} width="25px" height="25px" />
             </a>
           </Link>
-          <Link href="/cart">
+
+          <Link href="/cart" data-test-id="cart-link">
             <a>
               <Image alt="" src={bag} width="25px" height="25px" />
+              <span>({cartTotal})</span>
             </a>
           </Link>
         </span>

@@ -1,14 +1,13 @@
 import Cookies from 'js-cookie';
 
 export function getParsedCookie(key) {
-  const cookieValue = Cookies.get(key); // Type string | Undefined
-
+  const cookieValue = Cookies.get(key);
   if (!cookieValue) {
     return undefined;
   }
 
   try {
-    return JSON.parse(cookieValue); // Type should be a string
+    return JSON.parse(cookieValue);
   } catch (err) {
     return undefined;
   }

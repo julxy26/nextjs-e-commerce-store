@@ -15,8 +15,8 @@ function MyApp({ Component, pageProps }) {
           a,
           a:visited {
             text-decoration: none;
-            color: darkgrey;
             cursor: pointer;
+            color: darkgray;
           }
         `}
       />

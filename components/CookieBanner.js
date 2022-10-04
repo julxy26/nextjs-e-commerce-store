@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
-// isOpen is a Boolean
 const bannerStyles = (isOpen) => css`
   padding: 10px;
   z-index: 1;
@@ -22,7 +21,6 @@ const bannerStyles = (isOpen) => css`
 export default function CookieBanner() {
   const [isBannerOpen, setIsBannerOpen] = useState(false);
 
-  // This is only happening in the browser
   useEffect(() => {
     const initialValue = getLocalStorage('isBannerOpen');
     if (initialValue === null) {
