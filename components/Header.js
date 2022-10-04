@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { getProductById } from '../database/products';
+import React from 'react';
 import profile from '../public/avatar.png';
 import chicken from '../public/chicken.png';
 import search from '../public/magnifying-glass.png';
@@ -24,7 +23,6 @@ const headerLinkStyles = css`
 `;
 
 export default function Header() {
-  const [cartTotal, setCartTotal] = useState(0);
   return (
     <header>
       <nav css={headerNavStyles}>
@@ -58,7 +56,6 @@ export default function Header() {
           <Link href="/cart" data-test-id="cart-link">
             <a>
               <Image alt="" src={bag} width="25px" height="25px" />
-              <span>({cartTotal})</span>
             </a>
           </Link>
         </span>

@@ -14,8 +14,7 @@ module.exports = {
             databaseUrl: `postgres://${process.env.PGUSERNAME}:${process.env.PGPASSWORD}@${process.env.PGHOST}:5432/${process.env.PGDATABASE}`,
             tagName: 'sql',
             fieldTransform: 'camel',
-            // eslint-disable-next-line no-template-curly-in-string
-            transform: '${type}[]',
+            transform: '{type}[]',
           },
         ],
       },

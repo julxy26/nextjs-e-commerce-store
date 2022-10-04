@@ -2,10 +2,12 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { getProductById } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
 export default function Product(props) {
+  const [cartTotal, setCartTotal] = useState(0);
   if (props.error) {
     return (
       <div>
@@ -25,6 +27,7 @@ export default function Product(props) {
         <title>{props.product.title}</title>
         <meta name="description" content={props.product.title} />
       </Head>
+      <span>total: ({cartTotal})</span>
       <h2>{props.product.title}</h2>
       <Image
         src={`/${props.product.id}-${props.product.title}.jpeg`}
@@ -37,32 +40,27 @@ export default function Product(props) {
       <button
         data-test-id="product-add-to-cart"
         onClick={() => {
-          // getting the value of the cookie stars
           const currentCookieValue = getParsedCookie('cart');
 
-          // if there is no cookie we initialize the value with a 1
           if (!currentCookieValue) {
-            setStringifiedCookie('cart', [
-              { id: props.foundProduct.id, cart: 1 },
-            ]);
-            return;
+            setStringifiedCookie('cart', [{ id: props.product.id, cart: 1 }]);
+            return setCartTotal(1);
           }
 
-          // find the object that match the id of the page
-          const foundCookie = currentCookieValue.find(
-            (cookieFruitObject) =>
-              cookieFruitObject.id === props.foundProduct.id,
+          const allCookie = currentCookieValue.find(
+            (cookieProductObject) => cookieProductObject.cart,
           );
 
-          // if a object is not found i add a new object
-          if (!foundCookie) {
-            currentCookieValue.push({ id: props.foundProduct.id, stars: 1 });
+          if (!allCookie) {
+            currentCookieValue.push({
+              id: props.product.id,
+              cart: 1,
+            });
           } else {
-            // if a object is found i update the stars
-            foundCookie.stars++;
+            allCookie.cart++;
           }
-          // set the new value of the cookie
           setStringifiedCookie('cart', currentCookieValue);
+          setCartTotal(allCookie.cart);
         }}
       >
         Add to cart

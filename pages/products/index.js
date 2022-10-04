@@ -2,10 +2,12 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { getProducts } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
 export default function Products(props) {
+  const [cartTotal, setCartTotal] = useState(0);
   return (
     <>
       <Head>
@@ -13,7 +15,7 @@ export default function Products(props) {
         <meta name="description" content="A list of our products" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <span>total: ({cartTotal})</span>
       <h1>Products page</h1>
 
       {props.products.map((product) => {
@@ -38,33 +40,27 @@ export default function Products(props) {
               <button
                 data-test-id="product-add-to-cart"
                 onClick={() => {
-                  // getting the value of the cookie stars
                   const currentCookieValue = getParsedCookie('cart');
 
-                  // if there is no cookie we initialize the value with a 1
                   if (!currentCookieValue) {
                     setStringifiedCookie('cart', [{ id: product.id, cart: 1 }]);
-                    return;
+                    return setCartTotal(1);
                   }
 
-                  // find the object that match the id of the page
-                  const foundCookie = currentCookieValue.find(
-                    (cookieProductObject) =>
-                      cookieProductObject.id === product.id,
+                  const allCookie = currentCookieValue.find(
+                    (cookieProductObject) => cookieProductObject.cart,
                   );
 
-                  // if a object is not found i add a new object
-                  if (!foundCookie) {
+                  if (!allCookie) {
                     currentCookieValue.push({
                       id: product.id,
                       cart: 1,
                     });
                   } else {
-                    // if a object is found i update the stars
-                    foundCookie.cart++;
+                    allCookie.cart++;
                   }
-                  // set the new value of the cookie
                   setStringifiedCookie('cart', currentCookieValue);
+                  setCartTotal(allCookie.cart);
                 }}
               >
                 Add to cart
