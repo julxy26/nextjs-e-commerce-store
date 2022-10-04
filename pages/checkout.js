@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 
-export default function Home() {
+export default function Checkout() {
   return (
     <>
       <Head>
-        <title>Welcome to " " </title>
-        <meta name="description" content="Cosplay for your dog" />
+        <title>Checking out</title>
+        <meta name="description" content="Check out" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>Welcome to paw!</div>
+      <h1>Checkout page</h1>
     </>
   );
 }
