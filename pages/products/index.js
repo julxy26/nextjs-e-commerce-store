@@ -47,20 +47,21 @@ export default function Products(props) {
                     return setCartTotal(1);
                   }
 
-                  const allCookie = currentCookieValue.find(
-                    (cookieProductObject) => cookieProductObject.cart,
+                  const foundCookie = currentCookieValue.find(
+                    (cookieProductObject) =>
+                      cookieProductObject.id === product.id,
                   );
 
-                  if (!allCookie) {
+                  if (!foundCookie) {
                     currentCookieValue.push({
                       id: product.id,
                       cart: 1,
                     });
                   } else {
-                    allCookie.cart++;
+                    foundCookie.cart++;
                   }
                   setStringifiedCookie('cart', currentCookieValue);
-                  setCartTotal(allCookie.cart);
+                  setCartTotal(cartTotal + 1);
                 }}
               >
                 Add to cart

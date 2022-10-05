@@ -48,7 +48,8 @@ export default function Product(props) {
           }
 
           const allCookie = currentCookieValue.find(
-            (cookieProductObject) => cookieProductObject.cart,
+            (cookieProductObject) =>
+              cookieProductObject.id === props.cookieProductObject.id,
           );
 
           if (!allCookie) {

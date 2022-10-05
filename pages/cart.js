@@ -1,7 +1,10 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 
-export default function Cart() {
+// import { getProductById, getProducts } from '../database/products';
+// import { getParsedCookie, setStringifiedCookie } from '../utils/cookies';
+
+export default function Cart(props) {
   return (
     <>
       <Head>
@@ -13,4 +16,16 @@ export default function Cart() {
       <h1>Cart page</h1>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const productId = parseInt(context.query.productId);
+
+  const foundProduct = await getProductById(productId);
+
+  return {
+    props: {
+      product: foundProduct,
+    },
+  };
 }
