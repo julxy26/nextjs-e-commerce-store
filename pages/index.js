@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Welcome to " " </title>
+        <title>Welcome to inu </title>
         <meta name="description" content="Cosplay for your dog" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

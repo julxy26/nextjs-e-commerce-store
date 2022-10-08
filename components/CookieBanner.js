@@ -30,7 +30,7 @@ export default function CookieBanner() {
 
   return (
     <div css={bannerStyles(isBannerOpen)}>
-      <span>Please Accept our cookie policy</span>{' '}
+      <span>Please accept our cookie policy</span>{' '}
       <button
         onClick={() => {
           setIsBannerOpen(false);

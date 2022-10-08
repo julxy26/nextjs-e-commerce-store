@@ -6,7 +6,6 @@ export type Product = {
   price: string;
 };
 
-// Get all animals
 export async function getProducts() {
   const products = await sql<Product[]>`
     SELECT * FROM products;
@@ -14,7 +13,6 @@ export async function getProducts() {
   return products;
 }
 
-// Get a single animal by id
 export async function getProductById(productId: number) {
   const [product] = await sql<Product[]>`
     SELECT * FROM products WHERE id = ${productId}

@@ -2,12 +2,10 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { getProductById } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
 export default function Product(props) {
-  const [cartTotal, setCartTotal] = useState(0);
   if (props.error) {
     return (
       <div>
@@ -27,7 +25,9 @@ export default function Product(props) {
         <title>{props.product.title}</title>
         <meta name="description" content={props.product.title} />
       </Head>
-      <span>total: ({cartTotal})</span>
+
+      <Link href="/products"> Back to all products </Link>
+
       <h2>{props.product.title}</h2>
       <Image
         src={`/${props.product.id}-${props.product.title}.jpeg`}
@@ -44,24 +44,33 @@ export default function Product(props) {
 
           if (!currentCookieValue) {
             setStringifiedCookie('cart', [{ id: props.product.id, cart: 1 }]);
-            return setCartTotal(1);
+            return props.setCartTotal(1);
           }
 
-          const allCookie = currentCookieValue.find(
+          const foundCookie = currentCookieValue.find(
             (cookieProductObject) =>
-              cookieProductObject.id === props.cookieProductObject.id,
+              cookieProductObject.id === props.product.id,
           );
 
-          if (!allCookie) {
+          if (!foundCookie) {
             currentCookieValue.push({
               id: props.product.id,
               cart: 1,
             });
           } else {
-            allCookie.cart++;
+            foundCookie.cart++;
           }
+          const cookieCartNumber = currentCookieValue.map(
+            (cookieValue) => cookieValue.cart,
+          );
           setStringifiedCookie('cart', currentCookieValue);
-          setCartTotal(allCookie.cart);
+          props.setCartTotal(
+            JSON.stringify(
+              cookieCartNumber.reduce(
+                (previousValue, currentValue) => previousValue + currentValue,
+              ),
+            ),
+          );
         }}
       >
         Add to cart

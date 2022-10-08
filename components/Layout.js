@@ -9,7 +9,7 @@ export default function Layout(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header {...props} />
       <main>{props.children}</main>
       <Footer />
     </div>
