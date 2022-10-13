@@ -26,12 +26,14 @@ export default function Products(props) {
               <Link href={`/products/${product.id}`}>{product.title}</Link>
             </h2>
             <Link href={`/products/${product.id}`}>
-              <Image
-                src={`/${product.id}-${product.title}.jpeg`}
-                alt=""
-                width="300"
-                height="300"
-              />
+              <a>
+                <Image
+                  src={`/${product.id}-${product.title}.jpeg`}
+                  alt=""
+                  width="300"
+                  height="300"
+                />
+              </a>
             </Link>
 
             <div>description</div>
@@ -63,15 +65,16 @@ export default function Products(props) {
                 const cookieCartNumber = currentCookieValue.map(
                   (cookieValue) => cookieValue.cart,
                 );
-                setStringifiedCookie('cart', currentCookieValue);
-                props.setCartTotal(
-                  JSON.stringify(
-                    cookieCartNumber.reduce(
-                      (previousValue, currentValue) =>
-                        previousValue + currentValue,
-                    ),
-                  ),
+
+                const reducedCookieCartNumber = cookieCartNumber.reduce(
+                  (previousValue, currentValue) => previousValue + currentValue,
                 );
+
+                props.setCartTotal(JSON.stringify(reducedCookieCartNumber));
+                console.log(props.cartItems);
+                props.setTotalPrice(product.price * cookieCartNumber);
+
+                setStringifiedCookie('cart', currentCookieValue);
               }}
             >
               Add to cart
@@ -85,9 +88,15 @@ export default function Products(props) {
 
 export async function getServerSideProps() {
   const products = await getProducts();
+  // const cookies = context.req.cookies.cart;
+
+  // console.log(cookies);
+
+  // const filteredProducts = products.filter((product) => {});
   return {
     props: {
       products: products,
+      // filteredProducts: filteredProducts,
     },
   };
 }

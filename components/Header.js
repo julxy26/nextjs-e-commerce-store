@@ -20,7 +20,7 @@ const headerLinkStyles = css`
   padding: 0px;
 
   a + a {
-    margin-left: 20px;
+    margin-left: 35px;
   }
 `;
 

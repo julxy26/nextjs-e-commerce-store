@@ -2,22 +2,32 @@ import { css, Global } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import CookieBanner from '../components/CookieBanner';
 import Layout from '../components/Layout';
-import { getProducts } from '../database/products';
 import { getParsedCookie } from '../utils/cookies';
 
 function MyApp({ Component, pageProps }) {
   const [cartTotal, setCartTotal] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  // useEffect(() => {
-  //   const currentCookieValue = getParsedCookie('cart');
+  useEffect(() => {
+    const currentCookieValue = getParsedCookie('cart');
+    if (!currentCookieValue[0]) {
+      setCartItems('Your Cart is empty!');
+      return;
+    }
 
-  //   if (!currentCookieValue) {
-  //     setCartItems('Your cart is empty');
-  //   } else {
-  //     setCartItems(JSON.stringify(currentCookieValue));
-  //   }
-  // }, [cartTotal]);
+    const cookieCartNumber = currentCookieValue.map(
+      (cookieValue) => cookieValue.cart,
+    );
+
+    setCartTotal(
+      JSON.stringify(
+        cookieCartNumber.reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
+        ),
+      ),
+    );
+  }, [cartItems, totalPrice]);
 
   return (
     <>
@@ -44,6 +54,8 @@ function MyApp({ Component, pageProps }) {
           cartTotal={cartTotal}
           setCartItems={setCartItems}
           cartItems={cartItems}
+          setTotalPrice={setTotalPrice}
+          totalPrice={totalPrice}
         />
       </Layout>
     </>
@@ -51,12 +63,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-export async function getServerSideProps() {
-  const products = await getProducts();
-  return {
-    props: {
-      products: products,
-    },
-  };
-}

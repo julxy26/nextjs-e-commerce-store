@@ -35,6 +35,8 @@ export default function Product(props) {
         width="500"
         height="500"
       />
+      <div>description</div>
+
       <div>Price: {props.product.price}€</div>
 
       <button

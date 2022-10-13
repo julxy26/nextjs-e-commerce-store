@@ -17,6 +17,6 @@ export function setStringifiedCookie(key, value) {
   Cookies.set(key, JSON.stringify(value));
 }
 
-export function removeCookie(key) {
-  Cookies.remove(key);
+export function removeCookie(value) {
+  Cookies.remove(value);
 }
