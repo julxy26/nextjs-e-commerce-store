@@ -30,22 +30,24 @@ const sectionContentStyles = css`
 `;
 
 const h1Styles = css`
-  text-align: start;
-  width: 600px;
+  text-align: center;
+  width: 250px;
   margin: 60px auto;
   font-size: 45px;
-  text-decoration: underline;
   color: #343434;
+  font-weight: 100;
+  border-bottom: 1px solid #343434;
+  font-style: italic;
 `;
 
 const textStyles = css`
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 18px;
   width: 600px;
   background-color: #ffe9ba;
-  padding: 14px 10px;
+  padding: 17px 10px;
   font-weight: 200;
 `;
 const buttonStyles = css`

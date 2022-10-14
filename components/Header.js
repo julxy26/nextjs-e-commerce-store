@@ -10,7 +10,7 @@ const headerStyles = css`
   padding: 0;
   width: 100vw;
   border: none;
-  height: 70px;
+  height: 75px;
   z-index: 1;
   position: sticky;
   top: 0;
@@ -105,7 +105,7 @@ export default function Header(props) {
         <span css={headerLinkStyles}>
           <Link href="/cart" data-test-id="cart-link">
             <a>
-              <Image alt="" src={basket} width="34px" height="34px" />
+              <Image alt="" src={basket} width="32px" height="32px" />
               <span css={cartTotalStyles}>{props.cartTotal}</span>
             </a>
           </Link>

@@ -3,9 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const footerStyles = css`
-  padding-top: 40px;
+  padding: 40px 0;
   background-color: #ffffff;
-  color: #4b4c4d;
+  color: lightgrey;
+  font-size: 13px;
 
   ul {
     list-style: none;
@@ -22,16 +23,6 @@ const footerStyles = css`
 
   li {
     padding: 0 10px;
-  }
-
-  ul a {
-    color: inherit;
-    text-decoration: none;
-    opacity: 0.8;
-  }
-
-  ul a:hover {
-    opacity: 1;
   }
 
   .social {
