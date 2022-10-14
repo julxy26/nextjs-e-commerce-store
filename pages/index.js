@@ -7,9 +7,12 @@ const bodyDivStyles = css`
   display: block;
   text-align: center;
   margin-top: 110px;
+  width: 100vw;
+  margin-left: -5px;
 `;
 const sectionDivStyles = css`
   background-image: url('/background-image.webp');
+  border-bottom: 1px solid #343434;
   height: 700px;
   margin-top: -110px;
   margin-left: -8px;
@@ -20,10 +23,10 @@ const sectionDivStyles = css`
 const sectionContentStyles = css`
   background-color: #fff;
   border: 2px solid #343434;
-  margin-top: -30px;
+  margin-top: -40px;
   width: 900px;
   height: 580px;
-  box-shadow: 15px 15px #aca9e7;
+  box-shadow: 20px 20px #aca9e7;
 `;
 
 const h1Styles = css`
@@ -43,6 +46,7 @@ const textStyles = css`
   width: 600px;
   background-color: #ffe9ba;
   padding: 14px 10px;
+  font-weight: 200;
 `;
 const buttonStyles = css`
   margin-top: 20px;
@@ -120,9 +124,11 @@ const bestsellerImagesStyles = css`
   margin: 35px 25px 70px 25px;
   transition: all 0.3s ease-in-out;
   border-right: 3px solid #fff;
+  opacity: 0.7;
 
   &:hover {
     box-shadow: 10px 10px #aca9e7;
+    opacity: 1;
   }
 `;
 
@@ -158,6 +164,7 @@ export default function Home() {
             </a>
           </div>
         </div>
+
         <h2 css={h2Styles}>Bestsellers</h2>
 
         <hr css={hrStyles} />

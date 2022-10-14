@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }) {
       <Global
         styles={css`
           * {
+            color: #343434;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
               Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
               sans-serif;

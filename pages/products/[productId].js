@@ -6,13 +6,44 @@ import { useState } from 'react';
 import { getProductById } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
-const countButtonStyles = css`
-  border: 1px solid #a7a7a7;
-  font-size: 18px;
-  margin: 10px;
+const mainBodyStyles = css`
+  background-color: lightgrey;
+  margin: 65px 130px;
+  width: 100vw;
+  display: inline-flex;
+  align-items: center;
 `;
 
-const countNumberStyles = css``;
+const textContainerStyles = css`
+  background-color: #fff;
+  width: 600px;
+  margin-left: 60px;
+`;
+
+const descriptionStyles = css``;
+
+const counterContainerStyles = css`
+  padding: 10px 5px;
+  width: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const countButtonStyles = css`
+  border: none;
+  font-size: 18px;
+  text-decoration: none;
+  background-color: #fff;
+`;
+
+const countNumberStyles = css`
+  font-weight: 300;
+  padding: 7px 7px;
+  width: 20px;
+  background-color: #ffe9ba;
+  border-radius: 20px;
+`;
 
 const buttonStyles = css`
   background: #fff;
@@ -42,36 +73,6 @@ const buttonStyles = css`
   &:not(:disabled):hover {
     transform: scale(1.05);
   }
-
-  &:not(:disabled):hover:active {
-    transform: scale(1.05) translateY(0.125rem);
-  }
-
-  &:focus {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:before {
-    content: '';
-    left: calc(-1 * 0.375rem);
-    pointer-events: none;
-    position: absolute;
-    top: calc(-1 * 0.375rem);
-    transition: border-radius;
-    user-select: none;
-  }
-
-  &:focus:not(:focus-visible) {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:not(:focus-visible):before {
-    border-width: 0;
-  }
-
-  &:not(:disabled):active {
-    transform: translateY(0.125rem);
-  }
 `;
 
 export default function Product(props) {
@@ -98,77 +99,91 @@ export default function Product(props) {
         <meta name="description" content={props.product.title} />
       </Head>
 
-      <Link href="/products"> Back to all products </Link>
+      <main css={mainBodyStyles}>
+        <div>
+          <a>
+            <Link href="/products"> Back to all products </Link>
+          </a>
 
-      <h2>{props.product.title}</h2>
-      <Image
-        src={`/${props.product.id}-${props.product.title}.jpeg`}
-        alt=""
-        width="500"
-        height="500"
-      />
-      <div>description</div>
+          <div>
+            <Image
+              src={`/${props.product.id}-${props.product.title}.jpeg`}
+              alt=""
+              width="500"
+              height="500"
+            />
+          </div>
+        </div>
+        <div css={textContainerStyles}>
+          <h1>{props.product.title}</h1>
+          <p css={descriptionStyles}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.
+          </p>
 
-      <div>Price: {props.product.price}€</div>
+          <span>Price: {props.product.price}€</span>
+          <div css={counterContainerStyles}>
+            <button
+              css={countButtonStyles}
+              onClick={() => {
+                setProductCount(productCount + 1);
+              }}
+            >
+              +
+            </button>
 
-      <button
-        css={countButtonStyles}
-        onClick={() => {
-          setProductCount(productCount + 1);
-        }}
-      >
-        +
-      </button>
+            <span css={countNumberStyles}>{productCount}</span>
 
-      <span css={countNumberStyles}>{productCount}</span>
+            <button
+              css={countButtonStyles}
+              onClick={() => {
+                setProductCount(productCount - 1);
+              }}
+            >
+              -
+            </button>
+          </div>
 
-      <button
-        css={countButtonStyles}
-        onClick={() => {
-          setProductCount(productCount - 1);
-        }}
-      >
-        -
-      </button>
+          <button
+            css={buttonStyles}
+            data-test-id="product-add-to-cart"
+            onClick={() => {
+              if (!currentCookieValue) {
+                return setStringifiedCookie('cart', [
+                  { id: props.product.id, cart: productCount },
+                ]);
+              }
 
-      <button
-        css={buttonStyles}
-        data-test-id="product-add-to-cart"
-        onClick={() => {
-          if (!currentCookieValue) {
-            return setStringifiedCookie('cart', [
-              { id: props.product.id, cart: productCount },
-            ]);
-          }
+              const foundCookie = currentCookieValue.find(
+                (cookie) => props.product.id === cookie.id,
+              );
 
-          const foundCookie = currentCookieValue.find(
-            (cookie) => props.product.id === cookie.id,
-          );
+              if (!foundCookie) {
+                currentCookieValue.push({
+                  id: props.product.id,
+                  cart: productCount,
+                });
+              } else {
+                foundCookie.cart = foundCookie.cart + productCount;
+              }
 
-          if (!foundCookie) {
-            currentCookieValue.push({
-              id: props.product.id,
-              cart: productCount,
-            });
-          } else {
-            foundCookie.cart = foundCookie.cart + productCount;
-          }
-
-          const cookieCartNumber = currentCookieValue.map(
-            (cookieValue) => cookieValue.cart,
-          );
-          setStringifiedCookie('cart', currentCookieValue);
-          props.setCartTotal(
-            JSON.stringify(
-              cookieCartNumber.reduce(
-                (previousValue, currentValue) => previousValue + currentValue,
-              ),
-            ),
-          );
-        }}
-      >
-        Add to cart
-      </button>
+              const cookieCartNumber = currentCookieValue.map(
+                (cookieValue) => cookieValue.cart,
+              );
+              setStringifiedCookie('cart', currentCookieValue);
+              props.setCartTotal(
+                JSON.stringify(
+                  cookieCartNumber.reduce(
+                    (previousValue, currentValue) =>
+                      previousValue + currentValue,
+                  ),
+                ),
+              );
+            }}
+          >
+            Add to cart
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

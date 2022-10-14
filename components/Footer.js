@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const footerStyles = css`
-  padding: 40px 0;
+  padding-top: 40px;
   background-color: #ffffff;
   color: #4b4c4d;
 
@@ -39,13 +39,9 @@ const footerStyles = css`
     display: flex;
     justify-content: center;
 
-    a + a {
+    a {
       margin-left: 25px;
     }
-  }
-
-  .social > a:hover {
-    opacity: 0.9;
   }
 
   .copyright {

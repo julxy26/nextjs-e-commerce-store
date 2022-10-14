@@ -5,12 +5,19 @@ import Link from 'next/link';
 import { getProducts } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
+const h1Styles = css`
+  text-align: start;
+  margin-top: 60px;
+  margin-left: 130px;
+  text-decoration: underline;
+`;
+
 const bodyDivStyles = css`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 70px;
-  margin-bottom: 70px;
+  padding-bottom: 100px;
 `;
 
 const productDivStyles = css`
@@ -20,9 +27,9 @@ const productDivStyles = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 80px 0 -30px 0;
-  width: 570px;
-  height: 680px;
+  margin: 10px 0 -10px 0;
+  width: 540px;
+  height: 640px;
   transition: all 0.4s ease-in-out;
   box-shadow: 18px 18px #aca9e7;
   background-image: url('/background-image-shop-page.jpg');
@@ -36,6 +43,13 @@ const productDivStyles = css`
 
   &:hover .image {
     background-color: #fff;
+    border: 1px solid #fff;
+    width: 375px;
+    height: 375px;
+  }
+
+  &:hover .paragraph {
+    border: 1px solid #fff;
   }
 `;
 
@@ -43,11 +57,12 @@ const imageDivStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #aca9e7;
-  width: 380px;
-  height: 380px;
-  margin-bottom: 20px;
-  transition: all 0.3s ease-in-out;
+  margin-bottom: 10px;
+  transition: all 0.4s ease-in-out;
+  background-color: #fff;
+  border: 1px solid #343434;
+  width: 375px;
+  height: 375px;
 `;
 const paragraphStyle = css`
   background-color: #fff;
@@ -55,15 +70,15 @@ const paragraphStyle = css`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 16px 20px;
+  width: 335px;
 `;
 
-const h1Styles = css`
+const h2Styles = css`
   text-align: center;
-  width: 400px;
-  padding: 10px 18px;
+  padding: 7px 18px;
   font-size: 23px;
-  margin-top: 5px;
+  margin-top: 0;
   color: #343434;
 
   a:visited {
@@ -73,14 +88,13 @@ const h1Styles = css`
 const descriptionStyles = css`
   margin-top: -10px;
   font-size: 16px;
-  width: 430px;
+  font-weight: 300;
 `;
 const priceAndButtonDivStyles = css`
-  width: 430px;
-  margin-top: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+  width: 340px;
 `;
 const buttonStyles = css`
   background: #ffe9ba;
@@ -151,6 +165,7 @@ const priceStyles = css`
   border-radius: 50px;
   text-align: center;
   line-height: 50px;
+  font-weight: 400;
 `;
 
 export default function Products(props) {
@@ -162,6 +177,7 @@ export default function Products(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <h1 css={h1Styles}>Our Products</h1>
       <div css={bodyDivStyles}>
         {props.products.map((product) => {
           return (
@@ -176,25 +192,24 @@ export default function Products(props) {
                     <Image
                       src={`/${product.id}-${product.title}.jpeg`}
                       alt=""
-                      width="350"
-                      height="350"
+                      width="340"
+                      height="340"
                     />
                   </a>
                 </Link>
               </div>
-              <div css={paragraphStyle}>
-                <h1 css={h1Styles}>
+              <div className="paragraph" css={paragraphStyle}>
+                <h2 css={h2Styles}>
                   <a>
                     <Link href={`/products/${product.id}`}>
                       {product.title}
                     </Link>
                   </a>
-                </h1>
+                </h2>
 
-                <span css={descriptionStyles}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </span>
+                <p css={descriptionStyles}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.
+                </p>
 
                 <div css={priceAndButtonDivStyles}>
                   <span css={priceStyles}>{product.price}€</span>

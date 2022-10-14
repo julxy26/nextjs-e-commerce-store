@@ -5,12 +5,16 @@ import basket from '../public/basket.png';
 import inuLogo from '../public/inu-logo-icon-dark.png';
 
 const headerStyles = css`
-  background-color: #aca9e7;
-  margin: -10px;
+  background-color: #fff;
+  margin: -9px -5px;
   padding: 0;
   width: 100vw;
   border: none;
-  height: 100px;
+  height: 70px;
+  z-index: 1;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #343434;
 `;
 
 const headerNavStyles = css`
@@ -18,9 +22,7 @@ const headerNavStyles = css`
   align-items: center;
   justify-content: space-between;
   width: 100vw;
-  height: 90px;
-  padding-top: 10px;
-  margin-bottom: 40px;
+  height: 80px;
 `;
 
 const headerLinkStyles = css`
@@ -36,21 +38,25 @@ const headerLinkStyles = css`
   }
 
   a + a {
-    margin-left: 55px;
+    margin-left: 60px;
   }
 
   a::before {
     content: '';
     position: absolute;
     width: 100%;
-    height: 3px;
-    border-radius: 4px;
-    background-color: #18272f;
+    height: 2px;
+    border-radius: 5px;
+    background-color: #aca9e7;
     bottom: -3px;
     left: 0;
     transform-origin: right;
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
+  }
+
+  a:hover {
+    color: #aca9e7;
   }
 
   a:hover::before {
@@ -60,7 +66,7 @@ const headerLinkStyles = css`
 `;
 
 const dogLogo = css`
-  margin-right: 220px;
+  margin-right: 230px;
 `;
 
 const cartTotalStyles = css`
