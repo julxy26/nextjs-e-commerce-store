@@ -9,18 +9,9 @@ import {
   setStringifiedCookie,
 } from '../utils/cookies';
 
-// import { getProductById, getProducts } from '../database/products';
-// import { getParsedCookie, setStringifiedCookie } from '../utils/cookies';
-
-// return {
-//   id: cartItem.id,
-// name: product[0].title,
-// price: product[0].price,
-// qty: cartItem.cart,
-// };
-
 export default function Cart(props) {
   const currentCookieValue = getParsedCookie('cart');
+  const priceArray = [];
 
   return (
     <>
@@ -36,41 +27,88 @@ export default function Cart(props) {
         <div key={`cart-${props.products.id}`}>{props.cartItems}</div>
       ) : (
         currentCookieValue.map((cartItem) => {
-          const product = props.products.filter(
+          const product = props.products.find(
             (singleProduct) => singleProduct.id === cartItem.id,
-            props.setCartItems(),
+          );
+
+          priceArray.push(product.price * cartItem.cart);
+
+          props.setTotalPrice(
+            priceArray.reduce(
+              (previousValue, currentValue) => previousValue + currentValue,
+            ),
           );
 
           return (
             <div key={`cart-${cartItem.id}`}>
-              <div>{product[0].title}</div>
-              <Link href={`/products/${product[0].id}`}>
+              <div>{product.title}</div>
+              <Link href={`/products/${product.id}`}>
                 <a>
                   <Image
-                    src={`/${product[0].id}-${product[0].title}.jpeg`}
+                    src={`/${product.id}-${product.title}.jpeg`}
                     alt=""
                     width="150"
                     height="150"
                   />
                 </a>
               </Link>
-              <span>Price € {product[0].price * cartItem.cart},-</span>
+              <span>
+                Price €{product.price * cartItem.cart}
+                ,-
+              </span>
 
               <span>Qty</span>
-              <button>+</button>
+              <button
+                onClick={() => {
+                  props.setCartTotal(parseInt(props.cartTotal) + 1);
+
+                  const foundCookie = currentCookieValue.find(
+                    (cookie) => product.id === cookie.id,
+                  );
+
+                  foundCookie.cart++;
+                  setStringifiedCookie('cart', currentCookieValue);
+                }}
+              >
+                +
+              </button>
               <span>{cartItem.cart}</span>
-              <button>-</button>
+              <button
+                onClick={() => {
+                  props.setCartTotal(props.cartTotal - 1);
+
+                  const foundCookie = currentCookieValue.find(
+                    (cookie) => product.id === cookie.id,
+                  );
+
+                  if (foundCookie.cart <= 1) {
+                    const newCookieValue = currentCookieValue.filter(
+                      (cookie) => cookie.id !== cartItem.id,
+                    );
+                    setStringifiedCookie('cart', newCookieValue);
+                    props.setTotalPrice(0);
+                  } else {
+                    foundCookie.cart--;
+                    setStringifiedCookie('cart', currentCookieValue);
+                  }
+                }}
+              >
+                -
+              </button>
               <button
                 onClick={() => {
                   const newCookieValue = currentCookieValue.filter(
-                    (item) => item.id !== cartItem.id,
+                    (cookie) => cookie.id !== cartItem.id,
                   );
-                  setStringifiedCookie('cart', newCookieValue);
 
                   if (!newCookieValue[0]) {
+                    removeCookie('cart');
                     props.setCartItems('Your Cart is empty!');
                     props.setCartTotal(0);
                     props.setTotalPrice(0);
+                  } else {
+                    setStringifiedCookie('cart', newCookieValue);
+                    props.setCartItems(newCookieValue);
                   }
                 }}
               >

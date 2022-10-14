@@ -6,7 +6,7 @@ export default function SizeInfo() {
   return (
     <>
       <Head>
-        <title>How to choose the correct size?</title>
+        <title>Size chart</title>
         <meta name="description" content="Sizing information for your dog" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

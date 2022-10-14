@@ -11,9 +11,8 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const currentCookieValue = getParsedCookie('cart');
-    if (!currentCookieValue[0]) {
-      setCartItems('Your Cart is empty!');
-      return;
+    if (!currentCookieValue || !currentCookieValue[0]) {
+      return setCartItems('Your Cart is empty!');
     }
 
     const cookieCartNumber = currentCookieValue.map(
@@ -21,13 +20,11 @@ function MyApp({ Component, pageProps }) {
     );
 
     setCartTotal(
-      JSON.stringify(
-        cookieCartNumber.reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-        ),
+      cookieCartNumber.reduce(
+        (previousValue, currentValue) => previousValue + currentValue,
       ),
     );
-  }, [cartItems, totalPrice]);
+  }, [totalPrice]);
 
   return (
     <>
@@ -42,7 +39,11 @@ function MyApp({ Component, pageProps }) {
           a:visited {
             text-decoration: none;
             cursor: pointer;
-            color: darkgray;
+            color: grey;
+          }
+
+          body {
+            overflow-x: hidden;
           }
         `}
       />
