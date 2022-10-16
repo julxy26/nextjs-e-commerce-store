@@ -24,7 +24,6 @@ const imageDivStyles = css`
   width: 575px;
   height: 575px;
   border: 2px solid #343434;
-  background-color: #fff;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -45,6 +44,8 @@ const hrStyles = css`
 
 const imageDivStyles2 = css`
   margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const textContainerStyles = css`
@@ -261,14 +262,14 @@ export default function Product(props) {
           <div css={imageDivStyles}>
             <a>
               <Link href="/size-info">
-                <Image src="/sizes.png" alt="" width="480" height="500" />
+                <Image src="/sizes.png" alt="" width="500" height="500" />
               </Link>
             </a>
           </div>
 
           <div css={imageDivStyles}>
             <Image
-              src={`/${props.product.id}-${props.product.title}2.jpeg`}
+              src={`/${props.product.id}-${props.product.title}.jpeg`}
               alt=""
               width="500"
               height="500"

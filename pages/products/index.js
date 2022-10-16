@@ -124,32 +124,6 @@ const buttonStyles = css`
   &:not(:disabled):hover:active {
     transform: scale(1.05) translateY(0.125rem);
   }
-
-  &:focus {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:before {
-    content: '';
-    left: calc(-1 * 0.375rem);
-    pointer-events: none;
-    position: absolute;
-    top: calc(-1 * 0.375rem);
-    transition: border-radius;
-    user-select: none;
-  }
-
-  &:focus:not(:focus-visible) {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:not(:focus-visible):before {
-    border-width: 0;
-  }
-
-  &:not(:disabled):active {
-    transform: translateY(0.125rem);
-  }
 `;
 
 const priceStyles = css`

@@ -32,8 +32,32 @@ const countNumberStyles = css`
   border-radius: 20px;
 `;
 
-const buttonStyles = css`
+const removeItemStyles = css`
   background: #fff;
+  border: 1px solid #343434;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #343434;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+
+  &:hover,
+  &:active {
+    background-color: #aca9e7;
+    border: 1px solid #aca9e7;
+    background-position: 0 0;
+    color: #fff;
+  }
+`;
+
+const buttonStyles = css`
+  background: #aca9e7;
   backface-visibility: hidden;
   border-radius: 0.375rem;
   border-style: solid;
@@ -155,6 +179,7 @@ export default function Cart(props) {
               </span>
 
               <button
+                css={removeItemStyles}
                 onClick={() => {
                   const newCookieValue = currentCookieValue.filter(
                     (cookie) => cookie.id !== cartItem.id,
@@ -171,7 +196,7 @@ export default function Cart(props) {
                   }
                 }}
               >
-                Remove
+                x
               </button>
             </div>
           );
