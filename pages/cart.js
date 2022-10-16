@@ -34,10 +34,9 @@ const countNumberStyles = css`
 
 const removeItemStyles = css`
   background: #fff;
-  border: 1px solid #343434;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  border: 1px solid grey;
   box-sizing: border-box;
-  color: #343434;
+  color: grey;
   cursor: pointer;
   display: inline-block;
   font-size: 16px;
@@ -46,6 +45,7 @@ const removeItemStyles = css`
   vertical-align: middle;
   width: 30px;
   height: 30px;
+  transition: all 0.2s ease-in-out;
 
   &:hover,
   &:active {
@@ -58,15 +58,12 @@ const removeItemStyles = css`
 
 const buttonStyles = css`
   background: #aca9e7;
-  backface-visibility: hidden;
   border-radius: 0.375rem;
   border-style: solid;
   border-width: 0.125rem;
-  box-sizing: border-box;
   color: #212121;
   cursor: pointer;
   display: inline-block;
-  font-family: Circular, Helvetica, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -174,7 +171,7 @@ export default function Cart(props) {
                     }
                   }}
                 >
-                  -
+                  –
                 </button>
               </span>
 

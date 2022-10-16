@@ -205,7 +205,7 @@ export default function Product(props) {
               <button
                 css={countButtonStyles}
                 onClick={() => {
-                  setProductCount(productCount - 1);
+                  setProductCount(productCount ? productCount - 1 : 0);
                 }}
               >
                 –
@@ -269,7 +269,7 @@ export default function Product(props) {
 
           <div css={imageDivStyles}>
             <Image
-              src={`/${props.product.id}-${props.product.title}.jpeg`}
+              src={`/${props.product.id}-${props.product.title}2.jpeg`}
               alt=""
               width="500"
               height="500"
