@@ -48,7 +48,7 @@ const headerLinkStyles = css`
     height: 2px;
     border-radius: 5px;
     background-color: #aca9e7;
-    bottom: -3px;
+    bottom: -2px;
     left: 0;
     transform-origin: right;
     transform: scaleX(0);

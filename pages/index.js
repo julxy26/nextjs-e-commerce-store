@@ -30,14 +30,19 @@ const sectionContentStyles = css`
 `;
 
 const h1Styles = css`
+  display: block;
   text-align: center;
   width: 250px;
-  margin: 60px auto;
+  margin: 70px 0px 40px 130px;
   font-size: 45px;
   color: #343434;
   font-weight: 100;
-  border-bottom: 1px solid #343434;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 1px;
   font-style: italic;
+  background-color: #ffe9ba;
+  padding: 0 14px 10px 14px;
 `;
 
 const textStyles = css`
@@ -46,12 +51,13 @@ const textStyles = css`
   margin-top: 30px;
   font-size: 18px;
   width: 600px;
-  background-color: #ffe9ba;
-  padding: 17px 10px;
-  font-weight: 200;
+  padding: 14px 10px;
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  line-height: 27px;
 `;
 const buttonStyles = css`
-  margin-top: 20px;
+  margin-top: 10px;
   background: #aca9e7;
   backface-visibility: hidden;
   border-radius: 0.375rem;
@@ -79,36 +85,6 @@ const buttonStyles = css`
   &:not(:disabled):hover {
     transform: scale(1.05);
   }
-
-  &:not(:disabled):hover:active {
-    transform: scale(1.05) translateY(0.125rem);
-  }
-
-  &:focus {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:before {
-    content: '';
-    left: calc(-1 * 0.375rem);
-    pointer-events: none;
-    position: absolute;
-    top: calc(-1 * 0.375rem);
-    transition: border-radius;
-    user-select: none;
-  }
-
-  &:focus:not(:focus-visible) {
-    outline: 0 solid transparent;
-  }
-
-  &:focus:not(:focus-visible):before {
-    border-width: 0;
-  }
-
-  &:not(:disabled):active {
-    transform: translateY(0.125rem);
-  }
 `;
 
 const h2Styles = css`
@@ -129,7 +105,7 @@ const bestsellerImagesStyles = css`
   opacity: 0.7;
 
   &:hover {
-    box-shadow: 10px 10px #aca9e7;
+    box-shadow: 12px 12px #aca9e7;
     opacity: 1;
   }
 `;

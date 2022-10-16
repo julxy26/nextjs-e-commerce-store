@@ -10,6 +10,7 @@ const h1Styles = css`
   margin-top: 60px;
   margin-left: 130px;
   text-decoration: underline;
+  text-underline-offset: 5px;
 `;
 
 const bodyDivStyles = css`
@@ -43,13 +44,8 @@ const productDivStyles = css`
 
   &:hover .image {
     background-color: #fff;
-    border: 1px solid #fff;
     width: 375px;
     height: 375px;
-  }
-
-  &:hover .paragraph {
-    border: 1px solid #fff;
   }
 `;
 
@@ -208,7 +204,11 @@ export default function Products(props) {
                 </h2>
 
                 <p css={descriptionStyles}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                  sed...{' '}
+                  <i>
+                    <u>view more</u>
+                  </i>
                 </p>
 
                 <div css={priceAndButtonDivStyles}>

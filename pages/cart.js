@@ -9,6 +9,59 @@ import {
   setStringifiedCookie,
 } from '../utils/cookies';
 
+const counterContainerStyles = css`
+  padding: 10px 5px;
+  width: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const countButtonStyles = css`
+  border: none;
+  font-size: 18px;
+  text-decoration: none;
+  background-color: #fff;
+`;
+
+const countNumberStyles = css`
+  font-weight: 300;
+  padding: 7px 7px;
+  width: 20px;
+  background-color: #ffe9ba;
+  border-radius: 20px;
+`;
+
+const buttonStyles = css`
+  background: #fff;
+  backface-visibility: hidden;
+  border-radius: 0.375rem;
+  border-style: solid;
+  border-width: 0.125rem;
+  box-sizing: border-box;
+  color: #212121;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  padding: 0.875rem 1.125rem;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transform: translateZ(0) scale(1);
+  transition: transform 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  &:not(:disabled):hover {
+    transform: scale(1.05);
+  }
+`;
+
 export default function Cart(props) {
   const currentCookieValue = getParsedCookie('cart');
   const priceArray = [];
@@ -58,43 +111,49 @@ export default function Cart(props) {
               </span>
 
               <span>Qty</span>
-              <button
-                onClick={() => {
-                  props.setCartTotal(parseInt(props.cartTotal) + 1);
 
-                  const foundCookie = currentCookieValue.find(
-                    (cookie) => product.id === cookie.id,
-                  );
+              <span css={counterContainerStyles}>
+                <button
+                  css={countButtonStyles}
+                  onClick={() => {
+                    props.setCartTotal(parseInt(props.cartTotal) + 1);
 
-                  foundCookie.cart++;
-                  setStringifiedCookie('cart', currentCookieValue);
-                }}
-              >
-                +
-              </button>
-              <span>{cartItem.cart}</span>
-              <button
-                onClick={() => {
-                  props.setCartTotal(props.cartTotal - 1);
-
-                  const foundCookie = currentCookieValue.find(
-                    (cookie) => product.id === cookie.id,
-                  );
-
-                  if (foundCookie.cart <= 1) {
-                    const newCookieValue = currentCookieValue.filter(
-                      (cookie) => cookie.id !== cartItem.id,
+                    const foundCookie = currentCookieValue.find(
+                      (cookie) => product.id === cookie.id,
                     );
-                    setStringifiedCookie('cart', newCookieValue);
-                    props.setTotalPrice(0);
-                  } else {
-                    foundCookie.cart--;
+
+                    foundCookie.cart++;
                     setStringifiedCookie('cart', currentCookieValue);
-                  }
-                }}
-              >
-                -
-              </button>
+                  }}
+                >
+                  +
+                </button>
+                <span css={countNumberStyles}>{cartItem.cart}</span>
+                <button
+                  css={countButtonStyles}
+                  onClick={() => {
+                    props.setCartTotal(props.cartTotal - 1);
+
+                    const foundCookie = currentCookieValue.find(
+                      (cookie) => product.id === cookie.id,
+                    );
+
+                    if (foundCookie.cart <= 1) {
+                      const newCookieValue = currentCookieValue.filter(
+                        (cookie) => cookie.id !== cartItem.id,
+                      );
+                      setStringifiedCookie('cart', newCookieValue);
+                      props.setTotalPrice(0);
+                    } else {
+                      foundCookie.cart--;
+                      setStringifiedCookie('cart', currentCookieValue);
+                    }
+                  }}
+                >
+                  -
+                </button>
+              </span>
+
               <button
                 onClick={() => {
                   const newCookieValue = currentCookieValue.filter(
@@ -131,7 +190,7 @@ export default function Cart(props) {
       </button>
       <span>Total: {props.totalPrice}€</span>
       <Link href="/checkout">
-        <button>Checkout</button>
+        <button css={buttonStyles}>Checkout</button>
       </Link>
     </>
   );

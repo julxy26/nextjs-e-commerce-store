@@ -7,21 +7,83 @@ import { getProductById } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
 const mainBodyStyles = css`
-  background-color: lightgrey;
   margin: 65px 130px;
-  width: 100vw;
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const linkToShopStyles = css`
+  margin-bottom: 25px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 200;
+`;
+
+const imageDivStyles = css`
+  width: 575px;
+  height: 575px;
+  border: 2px solid #343434;
+  background-color: #fff;
   display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
-const textContainerStyles = css`
-  background-color: #fff;
-  width: 600px;
-  margin-left: 60px;
+const h2Styles = css`
+  margin-top: 130px;
+  color: #343434;
+  text-align: center;
+  width: 100%;
 `;
 
-const descriptionStyles = css``;
+const hrStyles = css`
+  width: 400px;
+  margin-top: -5px;
+`;
 
+const imageDivStyles2 = css`
+  margin-top: 50px;
+`;
+
+const textContainerStyles = css`
+  background-color: #aca9e7;
+  border: 2px solid #aca9e7;
+  height: 575px;
+  width: 575px;
+  margin-top: 43px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const h1Styles = css`
+  margin: 50px 40px;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  line-height: 45px;
+  letter-spacing: 0.7px;
+`;
+
+const descriptionStyles = css`
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  line-height: 27px;
+  margin: 0px 40px 30px 40px;
+`;
+
+const priceAndButtonDivStyles = css`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 50px 40px;
+`;
+const priceStyles = css`
+  font-size: 27px;
+  font-weight: 300;
+  width: 250px;
+  justify-self: flex-start;
+`;
 const counterContainerStyles = css`
   padding: 10px 5px;
   width: 100px;
@@ -34,7 +96,7 @@ const countButtonStyles = css`
   border: none;
   font-size: 18px;
   text-decoration: none;
-  background-color: #fff;
+  background-color: #aca9e7;
 `;
 
 const countNumberStyles = css`
@@ -101,11 +163,13 @@ export default function Product(props) {
 
       <main css={mainBodyStyles}>
         <div>
-          <a>
-            <Link href="/products"> Back to all products </Link>
-          </a>
+          <div css={linkToShopStyles}>
+            <a>
+              <Link href="/products"> Back to all products </Link>
+            </a>
+          </div>
 
-          <div>
+          <div css={imageDivStyles}>
             <Image
               src={`/${props.product.id}-${props.product.title}.jpeg`}
               alt=""
@@ -115,73 +179,117 @@ export default function Product(props) {
           </div>
         </div>
         <div css={textContainerStyles}>
-          <h1>{props.product.title}</h1>
+          <h1 css={h1Styles}>{props.product.title}</h1>
           <p css={descriptionStyles}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet.{' '}
           </p>
+          <div css={priceAndButtonDivStyles}>
+            <span css={priceStyles}>{props.product.price}€</span>
+            <div css={counterContainerStyles}>
+              <button
+                css={countButtonStyles}
+                onClick={() => {
+                  setProductCount(productCount + 1);
+                }}
+              >
+                +
+              </button>
 
-          <span>Price: {props.product.price}€</span>
-          <div css={counterContainerStyles}>
+              <span css={countNumberStyles}>{productCount}</span>
+
+              <button
+                css={countButtonStyles}
+                onClick={() => {
+                  setProductCount(productCount - 1);
+                }}
+              >
+                –
+              </button>
+            </div>
+
             <button
-              css={countButtonStyles}
+              css={buttonStyles}
+              data-test-id="product-add-to-cart"
               onClick={() => {
-                setProductCount(productCount + 1);
+                if (!currentCookieValue) {
+                  return setStringifiedCookie('cart', [
+                    { id: props.product.id, cart: productCount },
+                  ]);
+                }
+
+                const foundCookie = currentCookieValue.find(
+                  (cookie) => props.product.id === cookie.id,
+                );
+
+                if (!foundCookie) {
+                  currentCookieValue.push({
+                    id: props.product.id,
+                    cart: productCount,
+                  });
+                } else {
+                  foundCookie.cart = foundCookie.cart + productCount;
+                }
+
+                const cookieCartNumber = currentCookieValue.map(
+                  (cookieValue) => cookieValue.cart,
+                );
+                setStringifiedCookie('cart', currentCookieValue);
+                props.setCartTotal(
+                  JSON.stringify(
+                    cookieCartNumber.reduce(
+                      (previousValue, currentValue) =>
+                        previousValue + currentValue,
+                    ),
+                  ),
+                );
               }}
             >
-              +
-            </button>
-
-            <span css={countNumberStyles}>{productCount}</span>
-
-            <button
-              css={countButtonStyles}
-              onClick={() => {
-                setProductCount(productCount - 1);
-              }}
-            >
-              -
+              Add to cart
             </button>
           </div>
+        </div>
 
-          <button
-            css={buttonStyles}
-            data-test-id="product-add-to-cart"
-            onClick={() => {
-              if (!currentCookieValue) {
-                return setStringifiedCookie('cart', [
-                  { id: props.product.id, cart: productCount },
-                ]);
-              }
+        <h2 css={h2Styles}>Scroll for more</h2>
 
-              const foundCookie = currentCookieValue.find(
-                (cookie) => props.product.id === cookie.id,
-              );
+        <hr css={hrStyles} />
 
-              if (!foundCookie) {
-                currentCookieValue.push({
-                  id: props.product.id,
-                  cart: productCount,
-                });
-              } else {
-                foundCookie.cart = foundCookie.cart + productCount;
-              }
+        <div css={imageDivStyles2}>
+          <div css={imageDivStyles}>
+            <a>
+              <Link href="/size-info">
+                <Image src="/sizes.png" alt="" width="480" height="500" />
+              </Link>
+            </a>
+          </div>
 
-              const cookieCartNumber = currentCookieValue.map(
-                (cookieValue) => cookieValue.cart,
-              );
-              setStringifiedCookie('cart', currentCookieValue);
-              props.setCartTotal(
-                JSON.stringify(
-                  cookieCartNumber.reduce(
-                    (previousValue, currentValue) =>
-                      previousValue + currentValue,
-                  ),
-                ),
-              );
-            }}
-          >
-            Add to cart
-          </button>
+          <div css={imageDivStyles}>
+            <Image
+              src={`/${props.product.id}-${props.product.title}2.jpeg`}
+              alt=""
+              width="500"
+              height="500"
+            />
+          </div>
+          <div css={imageDivStyles}>
+            <Image
+              src={`/${props.product.id}-${props.product.title}3.jpeg`}
+              alt=""
+              width="500"
+              height="500"
+            />
+          </div>
+          <div css={imageDivStyles}>
+            <Image
+              src={`/${props.product.id}-${props.product.title}4.jpeg`}
+              alt=""
+              width="500"
+              height="500"
+            />
+          </div>
         </div>
       </main>
     </div>

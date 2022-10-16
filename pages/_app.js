@@ -43,6 +43,10 @@ function MyApp({ Component, pageProps }) {
             color: grey;
           }
 
+          a:hover {
+            cursor: pointer;
+          }
+
           body {
             overflow-x: hidden;
           }
