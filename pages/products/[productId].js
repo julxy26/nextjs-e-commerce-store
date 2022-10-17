@@ -7,7 +7,7 @@ import { getProductById } from '../../database/products';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookies';
 
 const mainBodyStyles = css`
-  margin: 65px 130px;
+  margin: 65px 130px 100px 130px;
   width: 90%;
   display: flex;
   flex-wrap: wrap;

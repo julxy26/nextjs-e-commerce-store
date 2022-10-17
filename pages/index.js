@@ -7,8 +7,9 @@ const bodyDivStyles = css`
   display: block;
   text-align: center;
   margin-top: 110px;
-  width: 100vw;
   margin-left: -5px;
+  margin-bottom: 100px;
+  width: 100vw;
 `;
 const sectionDivStyles = css`
   background-image: url('/background-image.webp');
@@ -99,7 +100,7 @@ const hrStyles = css`
 
 const bestsellerImagesStyles = css`
   display: inline-flex;
-  margin: 45px 25px 70px 30px;
+  margin: 45px 25px 0 30px;
   transition: all 0.3s ease-in-out;
   border-right: 3px solid #fff;
   opacity: 0.8;

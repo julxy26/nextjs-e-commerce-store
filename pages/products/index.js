@@ -18,7 +18,7 @@ const bodyDivStyles = css`
   flex-wrap: wrap;
   justify-content: center;
   gap: 70px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 `;
 
 const productDivStyles = css`
