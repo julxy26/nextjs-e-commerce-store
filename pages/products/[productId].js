@@ -262,7 +262,7 @@ export default function Product(props) {
           <div css={imageDivStyles}>
             <a>
               <Link href="/size-info">
-                <Image src="/sizes.png" alt="" width="500" height="500" />
+                <Image src="/sizes.png" alt="" width="470" height="500" />
               </Link>
             </a>
           </div>

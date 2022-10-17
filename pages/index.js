@@ -23,7 +23,7 @@ const sectionDivStyles = css`
 const sectionContentStyles = css`
   background-color: #fff;
   border: 2px solid #343434;
-  margin-top: -40px;
+  margin-top: -20px;
   width: 900px;
   height: 580px;
   box-shadow: 20px 20px #aca9e7;
@@ -88,7 +88,7 @@ const buttonStyles = css`
 `;
 
 const h2Styles = css`
-  margin-top: 80px;
+  margin-top: 100px;
   color: #343434;
 `;
 
@@ -99,10 +99,10 @@ const hrStyles = css`
 
 const bestsellerImagesStyles = css`
   display: inline-flex;
-  margin: 35px 25px 70px 25px;
+  margin: 45px 25px 70px 30px;
   transition: all 0.3s ease-in-out;
   border-right: 3px solid #fff;
-  opacity: 0.7;
+  opacity: 0.8;
 
   &:hover {
     box-shadow: 12px 12px #aca9e7;

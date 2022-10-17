@@ -9,6 +9,52 @@ import {
   setStringifiedCookie,
 } from '../utils/cookies';
 
+const mainBodyStyles = css`
+  margin: 60px 130px;
+  width: 950px;
+`;
+const h1Styles = css`
+  text-align: start;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+`;
+
+const cartItemStyles = css`
+  border: 1px solid #343434;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+`;
+
+const productNameStyles = css`
+  font-style: italic;
+  width: 400px;
+  margin-left: 30px;
+`;
+
+const priceAndQtyContainerStyles = css`
+  width: 400px;
+`;
+
+const priceStyles = css`
+  width: 150px;
+  display: inline-flex;
+  justify-content: center;
+`;
+const quantityStyles = css`
+  background-color: #fff;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 30px;
+  font-weight: 200;
+`;
+
 const counterContainerStyles = css`
   padding: 10px 5px;
   width: 100px;
@@ -50,9 +96,9 @@ const removeItemStyles = css`
   &:hover,
   &:active {
     background-color: #aca9e7;
-    border: 1px solid #aca9e7;
+    border: 1px solid #343434;
     background-position: 0 0;
-    color: #fff;
+    color: #343434;
   }
 `;
 
@@ -64,11 +110,11 @@ const buttonStyles = css`
   color: #212121;
   cursor: pointer;
   display: inline-block;
-  font-size: 1.125rem;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
-  padding: 0.875rem 1.125rem;
+  padding: 12px 14px;
   position: relative;
   text-align: left;
   text-decoration: none;
@@ -83,6 +129,9 @@ const buttonStyles = css`
   }
 `;
 
+const totalAndCheckoutContainerStyles = css``;
+const totalStyles = css``;
+
 export default function Cart(props) {
   const currentCookieValue = getParsedCookie('cart');
   const priceArray = [];
@@ -95,125 +144,143 @@ export default function Cart(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Cart page</h1>
+      <div css={mainBodyStyles}>
+        <h1 css={h1Styles}>My Cart</h1>
 
-      {!currentCookieValue ? (
-        <div key={`cart-${props.products.id}`}>{props.cartItems}</div>
-      ) : (
-        currentCookieValue.map((cartItem) => {
-          const product = props.products.find(
-            (singleProduct) => singleProduct.id === cartItem.id,
-          );
+        {!currentCookieValue ? (
+          <div key={`cart-${props.products.id}`}>{props.cartItems}</div>
+        ) : (
+          currentCookieValue.map((cartItem) => {
+            const product = props.products.find(
+              (singleProduct) => singleProduct.id === cartItem.id,
+            );
 
-          priceArray.push(product.price * cartItem.cart);
+            priceArray.push(product.price * cartItem.cart);
 
-          props.setTotalPrice(
-            priceArray.reduce(
-              (previousValue, currentValue) => previousValue + currentValue,
-            ),
-          );
+            props.setTotalPrice(
+              priceArray.reduce(
+                (previousValue, currentValue) => previousValue + currentValue,
+              ),
+            );
 
-          return (
-            <div key={`cart-${cartItem.id}`}>
-              <div>{product.title}</div>
-              <Link href={`/products/${product.id}`}>
-                <a>
-                  <Image
-                    src={`/${product.id}-${product.title}.jpeg`}
-                    alt=""
-                    width="150"
-                    height="150"
-                  />
-                </a>
-              </Link>
-              <span>
-                Price €{product.price * cartItem.cart}
-                ,-
-              </span>
+            return (
+              <div key={`cart-${cartItem.id}`} css={cartItemStyles}>
+                <div>
+                  <Link href={`/products/${product.id}`}>
+                    <a>
+                      <Image
+                        src={`/${product.id}-${product.title}.jpeg`}
+                        alt=""
+                        width="130"
+                        height="130"
+                      />
+                    </a>
+                  </Link>
+                </div>
+                <div css={productNameStyles}>{product.title}</div>
 
-              <span>Qty</span>
+                <div css={priceAndQtyContainerStyles}>
+                  <div css={priceStyles}>
+                    Price € {product.price * cartItem.cart}
+                    ,-
+                  </div>
 
-              <span css={counterContainerStyles}>
-                <button
-                  css={countButtonStyles}
-                  onClick={() => {
-                    props.setCartTotal(parseInt(props.cartTotal) + 1);
+                  <div css={quantityStyles}>
+                    <span>Qty</span>
 
-                    const foundCookie = currentCookieValue.find(
-                      (cookie) => product.id === cookie.id,
-                    );
+                    <span css={counterContainerStyles}>
+                      <button
+                        css={countButtonStyles}
+                        onClick={() => {
+                          props.setCartTotal(parseInt(props.cartTotal) + 1);
 
-                    foundCookie.cart++;
-                    setStringifiedCookie('cart', currentCookieValue);
-                  }}
-                >
-                  +
-                </button>
-                <span css={countNumberStyles}>{cartItem.cart}</span>
-                <button
-                  css={countButtonStyles}
-                  onClick={() => {
-                    props.setCartTotal(props.cartTotal - 1);
+                          const foundCookie = currentCookieValue.find(
+                            (cookie) => product.id === cookie.id,
+                          );
 
-                    const foundCookie = currentCookieValue.find(
-                      (cookie) => product.id === cookie.id,
-                    );
+                          foundCookie.cart++;
+                          setStringifiedCookie('cart', currentCookieValue);
+                        }}
+                      >
+                        +
+                      </button>
+                      <span css={countNumberStyles}>{cartItem.cart}</span>
+                      <button
+                        css={countButtonStyles}
+                        onClick={() => {
+                          props.setCartTotal(props.cartTotal - 1);
 
-                    if (foundCookie.cart <= 1) {
+                          const foundCookie = currentCookieValue.find(
+                            (cookie) => product.id === cookie.id,
+                          );
+
+                          if (foundCookie.cart <= 1) {
+                            const newCookieValue = currentCookieValue.filter(
+                              (cookie) => cookie.id !== cartItem.id,
+                            );
+                            setStringifiedCookie('cart', newCookieValue);
+                            props.setTotalPrice(0);
+                          } else {
+                            foundCookie.cart--;
+                            setStringifiedCookie('cart', currentCookieValue);
+                          }
+                        }}
+                      >
+                        –
+                      </button>
+                    </span>
+                  </div>
+
+                  <button
+                    css={removeItemStyles}
+                    onClick={() => {
                       const newCookieValue = currentCookieValue.filter(
                         (cookie) => cookie.id !== cartItem.id,
                       );
-                      setStringifiedCookie('cart', newCookieValue);
-                      props.setTotalPrice(0);
-                    } else {
-                      foundCookie.cart--;
-                      setStringifiedCookie('cart', currentCookieValue);
-                    }
-                  }}
-                >
-                  –
-                </button>
-              </span>
 
-              <button
-                css={removeItemStyles}
-                onClick={() => {
-                  const newCookieValue = currentCookieValue.filter(
-                    (cookie) => cookie.id !== cartItem.id,
-                  );
+                      if (!newCookieValue[0]) {
+                        removeCookie('cart');
+                        props.setCartItems('Your Cart is empty!');
+                        props.setCartTotal(0);
+                        props.setTotalPrice(0);
+                      } else {
+                        setStringifiedCookie('cart', newCookieValue);
+                        props.setCartItems(newCookieValue);
+                      }
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
 
-                  if (!newCookieValue[0]) {
-                    removeCookie('cart');
-                    props.setCartItems('Your Cart is empty!');
-                    props.setCartTotal(0);
-                    props.setTotalPrice(0);
-                  } else {
-                    setStringifiedCookie('cart', newCookieValue);
-                    props.setCartItems(newCookieValue);
-                  }
-                }}
-              >
-                x
-              </button>
-            </div>
-          );
-        })
-      )}
-
-      <button
-        onClick={() => {
-          removeCookie('cart');
-          props.setCartItems('Your Cart is empty!');
-          props.setCartTotal(0);
-          props.setTotalPrice(0);
-        }}
-      >
-        Remove all
-      </button>
-      <span>Total: {props.totalPrice}€</span>
-      <Link href="/checkout">
-        <button css={buttonStyles}>Checkout</button>
-      </Link>
+        <div css={totalAndCheckoutContainerStyles}>
+          <button
+            onClick={() => {
+              removeCookie('cart');
+              props.setCartItems('Your Cart is empty!');
+              props.setCartTotal(0);
+              props.setTotalPrice(0);
+            }}
+          >
+            Remove all
+          </button>
+          <span css={totalStyles}>Total: {props.totalPrice}€</span>
+          <a>
+            <Link href="/checkout">
+              <button css={buttonStyles}>Proceed to checkout</button>
+            </Link>
+          </a>
+          <a>
+            <Link href="/products">
+              <button css={buttonStyles}>Continue shopping</button>
+            </Link>
+          </a>
+        </div>
+      </div>
     </>
   );
 }
