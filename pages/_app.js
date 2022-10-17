@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
         (previousValue, currentValue) => previousValue + currentValue,
       ),
     );
-  }, [totalPrice]);
+  }, [totalPrice, cartItems]);
 
   return (
     <>

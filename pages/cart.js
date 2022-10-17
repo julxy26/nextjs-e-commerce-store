@@ -165,7 +165,7 @@ const totalAndCheckoutContainerStyles = css`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  width: 917px;
+  width: 950px;
   margin: 30px 0;
 `;
 
@@ -175,7 +175,7 @@ const totalStyles = css`
   text-decoration: underline;
   text-underline-offset: 4px;
   font-size: 16px;
-  width: 100px;
+  width: 130px;
 `;
 
 export default function Cart(props) {
@@ -254,11 +254,11 @@ export default function Cart(props) {
                           const foundCookie = currentCookieValue.find(
                             (cookie) => product.id === cookie.id,
                           );
+                          const newCookieValue = currentCookieValue.filter(
+                            (cookie) => cookie.id !== cartItem.id,
+                          );
 
                           if (foundCookie.cart <= 1) {
-                            const newCookieValue = currentCookieValue.filter(
-                              (cookie) => cookie.id !== cartItem.id,
-                            );
                             setStringifiedCookie('cart', newCookieValue);
                             props.setTotalPrice(0);
                           } else {
@@ -334,7 +334,7 @@ export default function Cart(props) {
             </a>
           </div>
 
-          <span css={totalStyles}>Total: {props.totalPrice}€</span>
+          <span css={totalStyles}>Subtotal: {props.totalPrice}€</span>
         </div>
       </div>
     </>

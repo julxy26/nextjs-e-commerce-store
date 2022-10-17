@@ -6,7 +6,7 @@ import inuLogo from '../public/inu-logo-icon-dark.png';
 
 const headerStyles = css`
   background-color: #fff;
-  margin: -9px -5px;
+  margin: -9px -8px;
   padding: 0;
   width: 100vw;
   border: none;

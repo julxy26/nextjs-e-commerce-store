@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const footerStyles = css`
-  padding: 40px 0;
+  margin: 40px -10px;
   background-color: #ffffff;
   color: lightgrey;
   font-size: 13px;
