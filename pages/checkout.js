@@ -189,9 +189,9 @@ export default function Checkout(props) {
                           </a>
                         </Link>
                       </div>
-                      <div css={itemTextStyles}>
+                      <p css={itemTextStyles}>
                         {cartItem.cart} x {product.title}
-                      </div>
+                      </p>
                     </div>
                   </div>
                 );
