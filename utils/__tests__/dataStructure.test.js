@@ -1,6 +1,16 @@
-//
 // E2E: Checkout flow, payment page, thank you page
-// Unit: Test functions for adding and removing info from cookie
-// Unit: Test function for updating quantity in item of cookie (eg. adding an item to the cart that already exists)
+
+// E2E: Add to cart, change quantity and remove from cart
 // Unit: Test cart sum function
-// Set up GitHub Actions to automatically test your code
+
+export function cartSum() {
+  return;
+}
+
+export function removeFromCart() {
+  return;
+}
+
+export function changeQuantity() {
+  return;
+}

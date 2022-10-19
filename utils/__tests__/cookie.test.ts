@@ -5,6 +5,8 @@ import {
   stringifyCookieValue,
 } from '../cookies';
 
+// Unit: Test function for updating quantity in item of cookie (eg. adding an item to the cart that already exists)
+
 test('stringify a cookie value', () => {
   expect(stringifyCookieValue([{ id: '1', cart: 2 }])).toBe(
     '[{"id":"1","cart":2}]',
